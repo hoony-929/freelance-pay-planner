@@ -1,10 +1,16 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { mockTasks, mockProjects, mockClients } from '@/lib/mock-data';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
-import { Calendar, CheckCircle2, Circle, Clock, DollarSign, AlertCircle } from 'lucide-react';
+import { Calendar, CheckCircle2, Circle, Clock, DollarSign, AlertCircle, Globe } from 'lucide-react';
 import { Task, Project, Client } from '@/types';
+import { translations, Language } from '@/lib/i18n';
 
 export default function Dashboard() {
+  const [lang, setLang] = useState<Language>('ko');
+  const t = translations[lang];
+
   // Helpers
   const getProject = (projectId: string) => mockProjects.find(p => p.id === projectId);
   const getClient = (clientId: string) => mockClients.find(c => c.id === clientId);
@@ -20,16 +26,33 @@ export default function Dashboard() {
 
   const formatDateLabel = (dateString: string) => {
     const date = parseISO(dateString);
-    if (isToday(date)) return <span className="text-red-600 font-semibold">Today</span>;
-    if (isTomorrow(date)) return <span className="text-orange-600 font-semibold">Tomorrow</span>;
+    if (isToday(date)) return <span className="text-red-600 font-semibold">{t.today}</span>;
+    if (isTomorrow(date)) return <span className="text-orange-600 font-semibold">{t.tomorrow}</span>;
     return format(date, 'MMM d, yyyy');
   };
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-50 min-h-screen">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Freelancer Dashboard</h1>
-        <p className="text-gray-600 mt-2">Welcome back! Here&apos;s what&apos;s happening with your projects and payments.</p>
+      <header className="mb-8 flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">{t.dashboardTitle}</h1>
+          <p className="text-gray-600 mt-2">{t.dashboardSubtitle}</p>
+        </div>
+        <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg border border-gray-200 shadow-sm">
+          <Globe className="w-4 h-4 text-gray-500" />
+          <select
+            value={lang}
+            onChange={(e) => setLang(e.target.value as Language)}
+            className="bg-transparent text-sm font-medium text-gray-700 focus:outline-none"
+            title={t.languageLabel}
+            aria-label={t.languageLabel}
+          >
+            <option value="ko">한국어</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+            <option value="zh">中文</option>
+          </select>
+        </div>
       </header>
 
       {/* KPI Cards */}
@@ -39,7 +62,7 @@ export default function Dashboard() {
             <Clock className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Pending Tasks</p>
+            <p className="text-sm text-gray-500 font-medium">{t.pendingTasks}</p>
             <p className="text-2xl font-bold text-gray-900">{incompleteTasks.length}</p>
           </div>
         </div>
@@ -48,7 +71,7 @@ export default function Dashboard() {
             <DollarSign className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Expected Payments</p>
+            <p className="text-sm text-gray-500 font-medium">{t.expectedPayments}</p>
             <p className="text-2xl font-bold text-gray-900">${totalExpected.toLocaleString()}</p>
           </div>
         </div>
@@ -57,7 +80,7 @@ export default function Dashboard() {
             <Calendar className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Active Projects</p>
+            <p className="text-sm text-gray-500 font-medium">{t.activeProjects}</p>
             <p className="text-2xl font-bold text-gray-900">{totalProjects}</p>
           </div>
         </div>
@@ -69,12 +92,12 @@ export default function Dashboard() {
           <div className="p-5 border-b border-gray-100 flex justify-between items-center">
             <h2 className="text-lg font-bold text-gray-900 flex items-center">
               <CheckCircle2 className="w-5 h-5 mr-2 text-blue-600" />
-              Upcoming Task Deadlines
+              {t.upcomingDeadlines}
             </h2>
           </div>
           <div className="divide-y divide-gray-50">
             {incompleteTasks.length === 0 ? (
-              <p className="p-6 text-center text-gray-500">All caught up!</p>
+              <p className="p-6 text-center text-gray-500">{t.allCaughtUp}</p>
             ) : (
               incompleteTasks.map(task => {
                 const project = getProject(task.projectId);
@@ -93,7 +116,7 @@ export default function Dashboard() {
                       </div>
                       <div className="text-right">
                         <div className="text-sm bg-gray-100 px-2 py-1 rounded-md inline-block">
-                          Due: {formatDateLabel(task.dueDate)}
+                          {t.due}: {formatDateLabel(task.dueDate)}
                         </div>
                       </div>
                     </div>
@@ -109,12 +132,12 @@ export default function Dashboard() {
           <div className="p-5 border-b border-gray-100 flex justify-between items-center">
             <h2 className="text-lg font-bold text-gray-900 flex items-center">
               <DollarSign className="w-5 h-5 mr-2 text-green-600" />
-              Expected Payments
+              {t.expectedPayments}
             </h2>
           </div>
           <div className="divide-y divide-gray-50">
             {pendingPayments.length === 0 ? (
-              <p className="p-6 text-center text-gray-500">No pending payments.</p>
+              <p className="p-6 text-center text-gray-500">{t.noPendingPayments}</p>
             ) : (
               pendingPayments.map(task => {
                 const project = getProject(task.projectId);
@@ -133,12 +156,12 @@ export default function Dashboard() {
                           </span>
                         </div>
                         <p className="text-sm text-gray-600">{task.title}</p>
-                        <p className="text-xs text-gray-400 mt-1">Project: {project?.name}</p>
+                        <p className="text-xs text-gray-400 mt-1">{t.projectLabel}: {project?.name}</p>
                       </div>
                       <div className="text-right flex flex-col items-end">
                         <div className="text-sm flex items-center text-gray-600 mb-1">
                           <AlertCircle className="w-4 h-4 mr-1 text-gray-400" />
-                          Expected: {task.paymentDueDate ? formatDateLabel(task.paymentDueDate) : 'N/A'}
+                          {t.expected}: {task.paymentDueDate ? formatDateLabel(task.paymentDueDate) : 'N/A'}
                         </div>
                       </div>
                     </div>

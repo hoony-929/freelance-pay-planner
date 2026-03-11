@@ -1,0 +1,68 @@
+export type Language = 'ko' | 'en' | 'ja' | 'zh';
+
+export const translations = {
+  ko: {
+    dashboardTitle: '프리랜서 대시보드',
+    dashboardSubtitle: '환영합니다! 진행 중인 프로젝트와 결제 내역을 확인하세요.',
+    pendingTasks: '대기 중인 작업',
+    expectedPayments: '예상 결제 대금',
+    activeProjects: '진행 중인 프로젝트',
+    upcomingDeadlines: '다가오는 작업 마감일',
+    allCaughtUp: '모든 작업이 완료되었습니다!',
+    due: '마감',
+    today: '오늘',
+    tomorrow: '내일',
+    noPendingPayments: '대기 중인 결제 대금이 없습니다.',
+    expected: '예상일',
+    projectLabel: '프로젝트',
+    languageLabel: '언어 설정'
+  },
+  en: {
+    dashboardTitle: 'Freelancer Dashboard',
+    dashboardSubtitle: 'Welcome back! Here\'s what\'s happening with your projects and payments.',
+    pendingTasks: 'Pending Tasks',
+    expectedPayments: 'Expected Payments',
+    activeProjects: 'Active Projects',
+    upcomingDeadlines: 'Upcoming Task Deadlines',
+    allCaughtUp: 'All caught up!',
+    due: 'Due',
+    today: 'Today',
+    tomorrow: 'Tomorrow',
+    noPendingPayments: 'No pending payments.',
+    expected: 'Expected',
+    projectLabel: 'Project',
+    languageLabel: 'Language'
+  },
+  ja: {
+    dashboardTitle: 'フリーランサー ダッシュボード',
+    dashboardSubtitle: 'お帰りなさい！プロジェクトと支払いの状況はこちらです。',
+    pendingTasks: '保留中のタスク',
+    expectedPayments: '予想される支払い',
+    activeProjects: '進行中のプロジェクト',
+    upcomingDeadlines: '今後のタスク期限',
+    allCaughtUp: 'すべてのタスクが完了しました！',
+    due: '期限',
+    today: '今日',
+    tomorrow: '明日',
+    noPendingPayments: '保留中の支払いはありません。',
+    expected: '予定日',
+    projectLabel: 'プロジェクト',
+    languageLabel: '言語'
+  },
+  zh: {
+    dashboardTitle: '自由职业者仪表板',
+    dashboardSubtitle: '欢迎回来！这是您的项目和付款情况。',
+    pendingTasks: '待办任务',
+    expectedPayments: '预期付款',
+    activeProjects: '进行中的项目',
+    upcomingDeadlines: '即将到来的任务截止日期',
+    allCaughtUp: '所有任务已完成！',
+    due: '截止',
+    today: '今天',
+    tomorrow: '明天',
+    noPendingPayments: '没有待处理的付款。',
+    expected: '预计',
+    projectLabel: '项目',
+    languageLabel: '语言'
+  }
+};
