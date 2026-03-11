@@ -103,7 +103,7 @@ export default function TaskForm() {
               <input
                 type="text"
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-gray-900"
               />
             </div>
 
@@ -111,7 +111,7 @@ export default function TaskForm() {
               <label className="block text-sm font-medium text-gray-700 mb-1">{getT('Select Project')}</label>
               <select
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white text-gray-900"
               >
                 <option value="">--</option>
                 {mockProjects.map(p => (
@@ -125,7 +125,7 @@ export default function TaskForm() {
               <input
                 type="date"
                 required
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-gray-900"
               />
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function TaskForm() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">{getT('Payment Status')}</label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white text-gray-900"
               >
                 <option value="Unpaid">{getT('Unpaid')}</option>
                 <option value="Invoice Sent">{getT('Invoice Sent')}</option>
@@ -152,7 +152,7 @@ export default function TaskForm() {
                 type="number"
                 min="0"
                 step="0.01"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-gray-900"
               />
             </div>
 
@@ -160,7 +160,7 @@ export default function TaskForm() {
               <label className="block text-sm font-medium text-gray-700 mb-1">{getT('Expected Payment Date')}</label>
               <input
                 type="date"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-gray-900"
               />
             </div>
           </div>

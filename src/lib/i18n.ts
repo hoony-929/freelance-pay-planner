@@ -16,7 +16,11 @@ export const translations = {
     expected: '예상일',
     projectLabel: '프로젝트',
     languageLabel: '언어 설정',
-    newTask: '새 작업 추가'
+    newTask: '새 작업 추가',
+    sendInvoice: '청구서 발송',
+    notificationTitle: '알림',
+    deadlineToday: '오늘의 마감일입니다!',
+    paymentToday: '오늘의 입금 예정일입니다. 계좌를 확인하세요!'
   },
   en: {
     dashboardTitle: 'Freelancer Dashboard',
@@ -33,7 +37,11 @@ export const translations = {
     expected: 'Expected',
     projectLabel: 'Project',
     languageLabel: 'Language',
-    newTask: 'New Task'
+    newTask: 'New Task',
+    sendInvoice: 'Send Invoice',
+    notificationTitle: 'Notifications',
+    deadlineToday: 'Today is the deadline!',
+    paymentToday: 'Payment is expected today. Check your bank account!'
   },
   ja: {
     dashboardTitle: 'フリーランサー ダッシュボード',
@@ -50,7 +58,11 @@ export const translations = {
     expected: '予定日',
     projectLabel: 'プロジェクト',
     languageLabel: '言語',
-    newTask: '新しいタスク'
+    newTask: '新しいタスク',
+    sendInvoice: '請求書を送る',
+    notificationTitle: '通知',
+    deadlineToday: '今日が締め切りです！',
+    paymentToday: '本日入金予定です。口座を確認してください！'
   },
   zh: {
     dashboardTitle: '自由职业者仪表板',
@@ -67,6 +79,10 @@ export const translations = {
     expected: '预计',
     projectLabel: '项目',
     languageLabel: '语言',
-    newTask: '新任务'
+    newTask: '新任务',
+    sendInvoice: '发送发票',
+    notificationTitle: '通知',
+    deadlineToday: '今天是截止日期！',
+    paymentToday: '今天预计将收到付款。请检查您的银行账户！'
   }
 };
