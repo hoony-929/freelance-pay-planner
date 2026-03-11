@@ -15,7 +15,8 @@ export const translations = {
     noPendingPayments: '대기 중인 결제 대금이 없습니다.',
     expected: '예상일',
     projectLabel: '프로젝트',
-    languageLabel: '언어 설정'
+    languageLabel: '언어 설정',
+    newTask: '새 작업 추가'
   },
   en: {
     dashboardTitle: 'Freelancer Dashboard',
@@ -31,7 +32,8 @@ export const translations = {
     noPendingPayments: 'No pending payments.',
     expected: 'Expected',
     projectLabel: 'Project',
-    languageLabel: 'Language'
+    languageLabel: 'Language',
+    newTask: 'New Task'
   },
   ja: {
     dashboardTitle: 'フリーランサー ダッシュボード',
@@ -47,7 +49,8 @@ export const translations = {
     noPendingPayments: '保留中の支払いはありません。',
     expected: '予定日',
     projectLabel: 'プロジェクト',
-    languageLabel: '言語'
+    languageLabel: '言語',
+    newTask: '新しいタスク'
   },
   zh: {
     dashboardTitle: '自由职业者仪表板',
@@ -63,6 +66,7 @@ export const translations = {
     noPendingPayments: '没有待处理的付款。',
     expected: '预计',
     projectLabel: '项目',
-    languageLabel: '语言'
+    languageLabel: '语言',
+    newTask: '新任务'
   }
 };

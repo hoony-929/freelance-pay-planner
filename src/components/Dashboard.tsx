@@ -1,15 +1,61 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { mockTasks, mockProjects, mockClients } from '@/lib/mock-data';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
-import { Calendar, CheckCircle2, Circle, Clock, DollarSign, AlertCircle, Globe } from 'lucide-react';
+import { Calendar, CheckCircle2, Circle, Clock, DollarSign, AlertCircle, Globe, Plus } from 'lucide-react';
 import { Task, Project, Client } from '@/types';
 import { translations, Language } from '@/lib/i18n';
+import { translateText } from '@/lib/translate';
+import Link from 'next/link';
 
 export default function Dashboard() {
   const [lang, setLang] = useState<Language>('ko');
+  const [translatedData, setTranslatedData] = useState<Record<string, string>>({});
   const t = translations[lang];
+
+  // Load translations for dynamic data when language changes
+  useEffect(() => {
+    const translateDynamicData = async () => {
+      if (lang === 'en') {
+        setTranslatedData({}); // Clear cache/translations if English is selected since it's the source
+        return;
+      }
+
+      const textsToTranslate = new Set<string>();
+
+      mockTasks.forEach(task => textsToTranslate.add(task.title));
+      mockProjects.forEach(proj => textsToTranslate.add(proj.name));
+      mockClients.forEach(client => {
+        if (client.company) textsToTranslate.add(client.company);
+        textsToTranslate.add(client.name);
+      });
+
+      const results: Record<string, string> = {};
+
+      // Parallelize translation requests
+      const promises = Array.from(textsToTranslate).map(async (text) => {
+        try {
+          const translated = await translateText(text, lang);
+          results[text] = translated;
+        } catch (e) {
+          console.error(`Failed to translate: ${text}`);
+          results[text] = text; // Fallback to original
+        }
+      });
+
+      await Promise.all(promises);
+      setTranslatedData(results);
+    };
+
+    translateDynamicData();
+  }, [lang]);
+
+  // Helper to get translated string or fallback
+  const getT = (str: string | undefined) => {
+    if (!str) return '';
+    return translatedData[str] || str;
+  };
 
   // Helpers
   const getProject = (projectId: string) => mockProjects.find(p => p.id === projectId);
@@ -38,20 +84,26 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold text-gray-900">{t.dashboardTitle}</h1>
           <p className="text-gray-600 mt-2">{t.dashboardSubtitle}</p>
         </div>
-        <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg border border-gray-200 shadow-sm">
-          <Globe className="w-4 h-4 text-gray-500" />
-          <select
+        <div className="flex items-center space-x-4">
+          <Link href="/new" className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
+            <Plus className="w-4 h-4" />
+            <span>{t.newTask || 'New Task'}</span>
+          </Link>
+          <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg border border-gray-200 shadow-sm">
+            <Globe className="w-4 h-4 text-gray-500" />
+            <select
             value={lang}
             onChange={(e) => setLang(e.target.value as Language)}
             className="bg-transparent text-sm font-medium text-gray-700 focus:outline-none"
             title={t.languageLabel}
             aria-label={t.languageLabel}
           >
-            <option value="ko">한국어</option>
-            <option value="en">English</option>
-            <option value="ja">日本語</option>
-            <option value="zh">中文</option>
-          </select>
+              <option value="ko">한국어</option>
+              <option value="en">English</option>
+              <option value="ja">日本語</option>
+              <option value="zh">中文</option>
+            </select>
+          </div>
         </div>
       </header>
 
@@ -108,9 +160,9 @@ export default function Dashboard() {
                       <div className="flex items-start space-x-3">
                         <Circle className="w-5 h-5 mt-0.5 text-gray-300" />
                         <div>
-                          <h3 className="text-md font-semibold text-gray-900">{task.title}</h3>
+                          <h3 className="text-md font-semibold text-gray-900">{getT(task.title)}</h3>
                           <p className="text-sm text-gray-500">
-                            {project?.name} ({client?.company || client?.name})
+                            {getT(project?.name)} ({getT(client?.company || client?.name)})
                           </p>
                         </div>
                       </div>
@@ -155,8 +207,8 @@ export default function Dashboard() {
                             {task.paymentStatus}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600">{task.title}</p>
-                        <p className="text-xs text-gray-400 mt-1">{t.projectLabel}: {project?.name}</p>
+                        <p className="text-sm text-gray-600">{getT(task.title)}</p>
+                        <p className="text-xs text-gray-400 mt-1">{t.projectLabel}: {getT(project?.name)}</p>
                       </div>
                       <div className="text-right flex flex-col items-end">
                         <div className="text-sm flex items-center text-gray-600 mb-1">
