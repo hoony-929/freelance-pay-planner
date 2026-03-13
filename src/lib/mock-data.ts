@@ -1,4 +1,4 @@
-import { User, Client, Project, Task, PaymentStatus } from '../types';
+import { User, Client, Project, Task } from '../types';
 
 export const mockUser: User = {
   id: 'u-1',
