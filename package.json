@@ -2,11 +2,14 @@
   "name": "freelancer-planner",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node --experimental-strip-types --test src/lib/translate.test.ts",
+    "test:all": "node --experimental-strip-types --test src/**/*.test.ts"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
