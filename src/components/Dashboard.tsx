@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { mockTasks, mockProjects, mockClients } from '@/lib/mock-data';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
 import { Calendar, CheckCircle2, Circle, Clock, DollarSign, AlertCircle, Globe, Plus, Send, Bell, X } from 'lucide-react';
@@ -66,7 +66,11 @@ export default function Dashboard() {
   const getClient = (clientId: string) => mockClients.find(c => c.id === clientId);
 
   // Derived state (mocked)
-  const incompleteTasks = tasks.filter(t => !t.isCompleted).sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+  const incompleteTasks = useMemo(() => {
+    return tasks
+      .filter(t => !t.isCompleted)
+      .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+  }, [tasks]);
 
   // Setup notifications on load
   useEffect(() => {
@@ -102,10 +106,16 @@ export default function Dashboard() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run once on mount
 
-  const pendingPayments = tasks.filter(t => t.paymentStatus !== 'Paid' && t.paymentAmount).sort((a, b) => new Date(a.paymentDueDate || '').getTime() - new Date(b.paymentDueDate || '').getTime());
+  const pendingPayments = useMemo(() => {
+    return tasks
+      .filter(t => t.paymentStatus !== 'Paid' && t.paymentAmount)
+      .sort((a, b) => new Date(a.paymentDueDate || '').getTime() - new Date(b.paymentDueDate || '').getTime());
+  }, [tasks]);
 
   // Aggregate stats
-  const totalExpected = pendingPayments.reduce((acc, task) => acc + (task.paymentAmount || 0), 0);
+  const totalExpected = useMemo(() => {
+    return pendingPayments.reduce((acc, task) => acc + (task.paymentAmount || 0), 0);
+  }, [pendingPayments]);
   const totalProjects = mockProjects.length;
   const activeClients = mockClients.length;
 
